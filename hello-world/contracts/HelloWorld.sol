@@ -47,4 +47,9 @@ contract HelloWorld {
     ) public view returns (Message[] memory) {
         return receivedMessages[_recipient];
     }
+    function countReceivedMessages(
+        address _recipient
+    ) public view returns (uint256) {
+        return receivedMessages[_recipient].length;
+    }
 }

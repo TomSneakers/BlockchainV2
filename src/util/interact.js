@@ -2,7 +2,7 @@ const alchemyKey = "wss://eth-sepolia.g.alchemy.com/v2/P39DFJvglTWtQLx1_HoXhulML
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
 const contractABI = require("../contract-abi.json");
-const contractAddress = "0x641BFCd5113B93A91ab8F116348bD4a9b34c7411";
+const contractAddress = "0xa040B22De966cd8f9B1b102e7f50A410C0D56bA8";
 
 export const helloWorldContract = new web3.eth.Contract(contractABI, contractAddress);
 
@@ -10,6 +10,16 @@ export const loadCurrentMessage = async () => {
     const message = await helloWorldContract.methods.message().call();
     return message;
 };
+export const countReceivedMessages = async (recipient) => {
+    try {
+        const count = await helloWorldContract.methods.countReceivedMessages(recipient).call();
+        return count;
+    } catch (error) {
+        console.error("Error counting received messages:", error);
+        return 0;
+    }
+};
+
 
 export const connectWallet = async () => {
     if (window.ethereum) {
@@ -125,4 +135,5 @@ export const getReceivedMessages = async () => {
         return [];
     }
 };
+
 
